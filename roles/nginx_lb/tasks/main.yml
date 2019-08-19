@@ -17,3 +17,4 @@
     dest: /etc/nginx/sites-available/http_all_sites.conf
     regexp: '(server_name(?!.*\b{{ site_url }}\b).*)$'
     replace: '\1 *.{{ site_url }}'
+  notify: reload nginx

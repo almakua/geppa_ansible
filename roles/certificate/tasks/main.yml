@@ -17,3 +17,4 @@
     dest: /etc/nginx/sites-available/{{ site_url }}.ssl.conf
     regexp: '#      ssl_certificate_key /etc/letsencrypt/live/www.{{ site_url }}/privkey.pem;'
     replace: '      ssl_certificate_key /etc/letsencrypt/live/www.{{ site_url }}/privkey.pem;'
+  notify: reload nginx

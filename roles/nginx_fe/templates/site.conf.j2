@@ -1,0 +1,207 @@
+map $http_host $MAGE_RUN_CODE {
+    hostnames;
+    ~(www\.)?{{site_url}} {{mage_run_code}};
+}
+
+map $http_host $MAGE_RUN_TYPE {
+    hostnames;
+    default website;
+}
+
+server {
+	listen 80;
+	server_name "~(www\.|origin\.)?{{site_url}}";
+	set $MAGE_ROOT /var/www/www.acquistaincantina.it/htdocs;
+	
+	access_log /var/www/{{site_url}}/logs/access.log;
+	error_log /var/www/{{site_url}}/logs/error.log;
+
+    root $MAGE_ROOT/pub;
+
+    index index.php;
+    autoindex off;
+    charset UTF-8;  
+
+	add_header Access-Control-Allow-Origin "*";
+
+	##sitemap.xml
+	location = /it/sitemaps/{{sitemap}}.xml { 
+	        alias $MAGE_ROOT/sitemaps/{{sitemap}}.xml;
+	        allow all;
+	}
+
+	location = /en/sitemaps/{{sitemap}}.xml { 
+	        alias $MAGE_ROOT/sitemaps/{{sitemap}}.xml;
+	        allow all;
+	}
+
+	location = /fr/sitemaps/{{sitemap}}.xml { 
+	        alias $MAGE_ROOT/sitemaps/{{sitemap}}.xml;
+	        allow all;
+	}
+
+	location = /de/sitemaps/{{sitemap}}.xml { 
+	        alias $MAGE_ROOT/sitemaps/{{sitemap}}.xml;
+	        allow all;
+	}
+
+	location = /es/sitemaps/{{sitemap}}.xml { 
+	        alias $MAGE_ROOT/sitemaps/{{sitemap}}.xml;
+	        allow all;
+	}
+
+	location /api {
+        rewrite ^/api/rest /api.php?type=rest last;
+        rewrite ^/api/v2_soap /api.php?type=v2_soap last;
+        rewrite ^/api/soap /api.php?type=soap last;
+        rewrite ^/api/xmlrpc /api.php?type=xmlrpc last;
+        fastcgi_pass unix:/run/php/www.acquistaincantina.it.sock;
+        fastcgi_param  SCRIPT_FILENAME  $document_root/api.php;
+        include fastcgi_params;
+        access_log /var/www/www.{{site_url}}/logs/api-access.log;
+        error_log /var/www/www.{{site_url}}/logs/api-error.log;
+    }
+
+	location /it {
+    	root $MAGE_ROOT/it;
+		try_files $uri $uri/ /it/index.php?$args;
+    }
+
+    location /en {
+        root $MAGE_ROOT/en;
+        try_files $uri $uri/ /en/index.php?$args;
+    }
+
+    location /fr {
+        root $MAGE_ROOT/fr;
+        try_files $uri $uri/ /fr/index.php?$args;
+    }
+
+    location /de {
+        root $MAGE_ROOT/de;
+        try_files $uri $uri/ /de/index.php?$args;
+    }
+
+    location /es {
+        root $MAGE_ROOT/es;
+        try_files $uri $uri/ /es/index.php?$args;
+    }
+
+
+    location ~ ^/(setup|update) {
+        root $MAGE_ROOT;
+
+        location ~* \.(jpg|jpeg|png|gif|svg|js|css|ico|txt|swf|eot|ttf|otf|woff|woff2)$ {
+        expires off;
+        log_not_found off;
+        access_log off;
+        add_header ETag "";
+        add_header Access-Control-Allow-Origin "*";
+        add_header Cache-Control "public";
+		include /etc/nginx/magento2-cors.conf;
+		#if ($request_method = OPTIONS ) {
+        #    add_header Access-Control-Allow-Methods "GET, OPTIONS";
+        #    add_header Access-Control-Allow-Headers "origin, authorization, accept";
+        #    add_header Access-Control-Allow-Credentials "true";
+        #    add_header Content-Length 0;
+        #    add_header Content-Type text/plain;
+        #    return 200;
+        #}
+        }
+
+        location ~ ^/(setup|update)/index.php {
+                fastcgi_split_path_info ^(.+?\.php)(/.*)$;
+                fastcgi_pass unix:/run/php/stage.acquistaincantina.it.sock;
+                fastcgi_index  index.php;
+                fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+                include        fastcgi_params;
+        }
+
+        location ~ ^/(setup|update)/(?!pub/). {
+            deny all;
+        }
+    }
+
+    location / {
+    	try_files $uri $uri/ /index.php$is_args$args;
+    }
+   
+    rewrite ^/static/(version\d*/)?(.*)$ /static/$2 last;
+
+    location ~ ^/static/(version\d*/)?(.*)$ {
+
+        location ~* \.(jpg|jpeg|png|gif|svg|js|css|ico|txt)$ {
+            expires max;
+            log_not_found off;
+            access_log off;
+            add_header ETag "";
+            add_header Access-Control-Allow-Origin "*";
+            add_header Cache-Control "public";
+	        #include /etc/nginx/magento2-cors.conf;
+            try_files $uri $uri/ @static;
+        }
+
+        location ~* \.(swf|eot|ttf|otf|woff|woff2)$ {
+            expires max;
+            log_not_found off;
+            access_log off;
+            add_header ETag "";
+            add_header Access-Control-Allow-Origin "*";
+            add_header Cache-Control "public";
+	        #include /etc/nginx/magento2-cors.conf;
+            try_files $uri $uri/ @static;
+        }
+
+	    include /etc/nginx/magento2-cors.conf;
+        try_files $uri $uri/ @static;
+    }
+
+
+    location /media/ {
+
+        location ~* \.(jpg|jpeg|png|gif|svg|js|css|ico|txt)$ {
+            expires max;
+            log_not_found off;
+            access_log off;
+            add_header ETag "";
+            add_header Access-Control-Allow-Origin "*";
+			#include /etc/nginx/magento2-cors.conf;
+            add_header Cache-Control "public";
+            try_files $uri $uri/ @media;
+        }
+
+        location ~* \.(swf|eot|ttf|otf|woff|woff2)$ {
+            expires max;
+            log_not_found off;
+            access_log off;
+            add_header ETag "";
+            add_header Access-Control-Allow-Origin "*";
+			#include /etc/nginx/magento2-cors.conf;
+            add_header Cache-Control "public";
+            try_files $uri $uri/ @media;
+        }
+
+        try_files $uri $uri/ @media;
+    }
+    
+    location @static { rewrite /static/(version\d*/)?(.*)$ /static.php?resource=$2 last; }
+    location @media { try_files $uri $uri/ /get.php$is_args$args; }
+
+    location ~ (index|infoo|7p_magento|get|health_check|static|report|autocomplete|check|tnd|404|503)\.php$ {
+    try_files $uri =404;
+    fastcgi_split_path_info ^(.+.php)(.*)$;
+    fastcgi_pass unix:/run/php/www.acquistaincantina.it.sock;
+
+    fastcgi_param  MAGE_RUN_CODE $MAGE_RUN_CODE;
+    fastcgi_param  MAGE_RUN_TYPE $MAGE_RUN_TYPE;
+
+    fastcgi_param  PHP_FLAG  "session.auto_start=off \n suhosin.session.cryptua=off";
+    fastcgi_param  HTTPS on;
+
+    fastcgi_index  index.php;
+    fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+    include        fastcgi_params;
+    }
+
+    location ~* \.php$ { return 404; }
+}

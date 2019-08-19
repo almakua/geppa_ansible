@@ -1,0 +1,19 @@
+---
+
+- name: Push SSL config for {{site_url }}
+  template:
+    src: ssl.conf.j2
+    dest: /etc/nginx/sites-available/{{ site_url }}.ssl.conf
+
+- name: Symlink {{site_url}} to sites enabled
+  file:
+    src: /etc/nginx/sites-available/{{ site_url }}.ssl.conf
+    dest: /etc/nginx/sites-enabled/{{ site_url }}.ssl.conf
+    state: link
+
+- name: Make sure {{ site_url }} is redirected to https
+  replace:
+    backup: yes
+    dest: /etc/nginx/sites-available/http_all_sites.conf
+    regexp: '(server_name(?!.*\b{{ site_url }}\b).*)$'
+    replace: '\1 *.{{ site_url }}'

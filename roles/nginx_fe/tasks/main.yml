@@ -1,0 +1,5 @@
+---
+- name: Push site config for {{site_url }}
+  template:
+    src: site.conf.j2
+    dest: /etc/nginx/sites-available/{{ site_url }}.conf

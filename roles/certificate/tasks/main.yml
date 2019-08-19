@@ -1,0 +1,19 @@
+---
+
+- name: create certificate
+  command: certbot --nginx certonly -d {{site_url}} -d www.{{site_url}}
+  ignore_errors: yes
+
+- name: enable ssl certificates
+  replace:
+    backup: yes
+    dest: /etc/nginx/sites-available/{{ site_url }}.ssl.conf
+    regexp: '#      ssl_certificate /etc/letsencrypt/live/www.{{ site_url }}/fullchain.pem;'
+    replace: '      ssl_certificate /etc/letsencrypt/live/www.{{ site_url }}/fullchain.pem;'
+
+- name: enable ssl certificate key
+  replace:
+    backup: yes
+    dest: /etc/nginx/sites-available/{{ site_url }}.ssl.conf
+    regexp: '#      ssl_certificate_key /etc/letsencrypt/live/www.{{ site_url }}/privkey.pem;'
+    replace: '      ssl_certificate_key /etc/letsencrypt/live/www.{{ site_url }}/privkey.pem;'

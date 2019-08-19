@@ -1,0 +1,16 @@
+---
+- hosts: LB
+  vars_files:
+    - geppa_vars
+  become: yes
+  gather_facts: no
+  roles: 
+    - nginx_lb 
+  #  - certificate
+
+#- hosts: FE
+#  vars_files:
+#    - geppa_vars
+#  become: yes
+#  roles: 
+#    - nginx_fe 

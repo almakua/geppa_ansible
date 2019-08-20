@@ -3,8 +3,8 @@ server {
       server_tokens off;
       server_name www.{{ site_url }} {{ site_url }};
 
-#      ssl_certificate /etc/letsencrypt/live/www.{{ site_url }}/fullchain.pem;
-#      ssl_certificate_key /etc/letsencrypt/live/www.{{ site_url }}/privkey.pem;
+#      ssl_certificate /etc/letsencrypt/live/{{ site_url }}/fullchain.pem;
+#      ssl_certificate_key /etc/letsencrypt/live/{{ site_url }}/privkey.pem;
 
       access_log /var/log/nginx/{{ site_url }}-access.log;
       error_log /var/log/nginx/{{ site_url }}-error.log;

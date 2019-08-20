@@ -1,20 +1,26 @@
 ---
 
+- name: check if file cert exists
+  stat:
+    path: /etc/letsencrypt/live/{{ site_url }}/privkey.pem
+  register: certificate_status
+
 - name: create certificate
   command: certbot --nginx certonly -d {{site_url}} -d www.{{site_url}}
   ignore_errors: yes
+  when: certificate_status.stat.exists == False
 
-- name: enable ssl certificates
+  - name: enable ssl certificates
   replace:
     backup: yes
     dest: /etc/nginx/sites-available/{{ site_url }}.ssl.conf
-    regexp: '#      ssl_certificate /etc/letsencrypt/live/www.{{ site_url }}/fullchain.pem;'
-    replace: '      ssl_certificate /etc/letsencrypt/live/www.{{ site_url }}/fullchain.pem;'
+    regexp: '#      ssl_certificate /etc/letsencrypt/live/{{ site_url }}/fullchain.pem;'
+    replace: '      ssl_certificate /etc/letsencrypt/live/{{ site_url }}/fullchain.pem;'
 
 - name: enable ssl certificate key
   replace:
     backup: yes
     dest: /etc/nginx/sites-available/{{ site_url }}.ssl.conf
-    regexp: '#      ssl_certificate_key /etc/letsencrypt/live/www.{{ site_url }}/privkey.pem;'
-    replace: '      ssl_certificate_key /etc/letsencrypt/live/www.{{ site_url }}/privkey.pem;'
+    regexp: '#      ssl_certificate_key /etc/letsencrypt/live/{{ site_url }}/privkey.pem;'
+    replace: '      ssl_certificate_key /etc/letsencrypt/live/{{ site_url }}/privkey.pem;'
   notify: reload nginx

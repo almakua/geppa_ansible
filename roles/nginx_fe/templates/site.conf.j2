@@ -13,8 +13,8 @@ server {
 	server_name "~(www\.|origin\.)?{{site_url}}";
 	set $MAGE_ROOT /var/www/www.acquistaincantina.it/htdocs;
 	
-	access_log /var/www/{{site_url}}/logs/access.log;
-	error_log /var/www/{{site_url}}/logs/error.log;
+	access_log /var/www/www.acquistaincantina.it/logs/{{site_url}}_access.log;
+	error_log /var/www/www.acquistaincantina.it/logs/{{site_url}}_error.log;
 
     root $MAGE_ROOT/pub;
 
@@ -58,8 +58,8 @@ server {
         fastcgi_pass unix:/run/php/www.acquistaincantina.it.sock;
         fastcgi_param  SCRIPT_FILENAME  $document_root/api.php;
         include fastcgi_params;
-        access_log /var/www/www.{{site_url}}/logs/api-access.log;
-        error_log /var/www/www.{{site_url}}/logs/api-error.log;
+        access_log /var/www/www.acquistaincantina.it/logs/{{site_url}}_api-access.log;
+        error_log /var/www/www.acquistaincantina.it/logs/{{site_url}}_api-error.log;
     }
 
 	location /it {

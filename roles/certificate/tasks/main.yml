@@ -10,7 +10,7 @@
   ignore_errors: yes
   when: certificate_status.stat.exists == False
 
-  - name: enable ssl certificates
+- name: enable ssl certificates
   replace:
     backup: yes
     dest: /etc/nginx/sites-available/{{ site_url }}.ssl.conf

@@ -5,5 +5,7 @@
 c003659alb00.neen.cloud
 
 [FE]
-c003659app00.neen.cloud=10.10.210.17
+c003659app00.neen.cloud
 
+[gatewayed]
+c003659app00.neen.cloud ansible_host=10.10.210.17

@@ -8,9 +8,11 @@
     - nginx_lb 
     - certificate
 
-#- hosts: FE
-#  vars_files:
-#    - geppa_vars
-#  become: yes
-#  roles: 
-#    - nginx_fe 
+- hosts: FE
+  user: "{{ neen_user }}"
+  vars_files:
+    - geppa_vars
+  become: yes
+  gather_facts: no
+  roles: 
+    - nginx_fe 

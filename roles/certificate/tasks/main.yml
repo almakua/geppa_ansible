@@ -7,6 +7,7 @@
 #  with_dict:
 #    - "{{ virtualhosts }}"
 #  when: item.key not in ['acquistaincantina']
+#  tags: letsencrypt
 
 #- name: create certificate
 #  command: certbot --nginx certonly -d {{item.value.url}} -d www.{{item.value.url}}
@@ -14,6 +15,7 @@
 #  when: item.key not in ['acquistaincantina']
 #  with_dict:
 #    - "{{ virtualhosts }}" 
+#  tags: letsencrypt
 
 - name: enable ssl certificates
   replace:
@@ -24,6 +26,7 @@
   with_dict:
     - "{{ virtualhosts }}"
   when: item.key not in ['acquistaincantina']
+  tags: nginx
 
 - name: enable ssl certificate key
   replace:
@@ -35,3 +38,4 @@
     - "{{ virtualhosts }}"
   when: item.key not in ['acquistaincantina']
   notify: reload nginx
+  tags: nginx

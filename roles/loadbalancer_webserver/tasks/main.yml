@@ -7,6 +7,7 @@
   with_dict:
     - "{{ virtualhosts }}"
   when: item.key not in ['acquistaincantina']
+  tags: nginx
 
 - name: Enable virtualhosts via symlink
   file:
@@ -17,3 +18,4 @@
     - "{{ virtualhosts }}"
   notify: reload nginx
   when: item.key not in ['acquistaincantina']
+  tags: nginx

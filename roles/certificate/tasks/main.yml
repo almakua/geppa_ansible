@@ -1,26 +1,37 @@
 ---
 
-- name: check if file cert exists
-  stat:
-    path: /etc/letsencrypt/live/{{ site_url }}/privkey.pem
-  register: certificate_status
+#- name: check if file cert exists
+#  stat:
+#    path: /etc/letsencrypt/live/{{ item.value.url }}/privkey.pem
+#  register: certificate_status
+#  with_dict:
+#    - "{{ virtualhosts }}"
+#  when: item.key not in ['acquistaincantina']
 
-- name: create certificate
-  command: certbot --nginx certonly -d {{site_url}} -d www.{{site_url}}
-  ignore_errors: yes
-  when: certificate_status.stat.exists == False
+#- name: create certificate
+#  command: certbot --nginx certonly -d {{item.value.url}} -d www.{{item.value.url}}
+#  ignore_errors: yes
+#  when: item.key not in ['acquistaincantina']
+#  with_dict:
+#    - "{{ virtualhosts }}" 
 
 - name: enable ssl certificates
   replace:
-    backup: yes
-    dest: /etc/nginx/sites-available/{{ site_url }}.ssl.conf
-    regexp: '#      ssl_certificate /etc/letsencrypt/live/{{ site_url }}/fullchain.pem;'
-    replace: '      ssl_certificate /etc/letsencrypt/live/{{ site_url }}/fullchain.pem;'
+#    backup: yes
+    dest: /etc/nginx/sites-available/{{ item.value.url }}.conf
+    regexp: '#      ssl_certificate /etc/letsencrypt/live/{{ item.value.url }}/fullchain.pem;'
+    replace: '      ssl_certificate /etc/letsencrypt/live/{{ item.value.url }}/fullchain.pem;'
+  with_dict:
+    - "{{ virtualhosts }}"
+  when: item.key not in ['acquistaincantina']
 
 - name: enable ssl certificate key
   replace:
-    backup: yes
-    dest: /etc/nginx/sites-available/{{ site_url }}.ssl.conf
-    regexp: '#      ssl_certificate_key /etc/letsencrypt/live/{{ site_url }}/privkey.pem;'
-    replace: '      ssl_certificate_key /etc/letsencrypt/live/{{ site_url }}/privkey.pem;'
+#    backup: yes
+    dest: /etc/nginx/sites-available/{{ item.value.url }}.conf
+    regexp: '#      ssl_certificate_key /etc/letsencrypt/live/{{ item.value.url }}/privkey.pem;'
+    replace: '      ssl_certificate_key /etc/letsencrypt/live/{{ item.value.url }}/privkey.pem;'
+  with_dict:
+    - "{{ virtualhosts }}"
+  when: item.key not in ['acquistaincantina']
   notify: reload nginx

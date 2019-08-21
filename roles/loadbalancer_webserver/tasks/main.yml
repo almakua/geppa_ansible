@@ -1,0 +1,19 @@
+---
+
+- name: Push SSL config for virtualhosts
+  template:
+    src: ssl.conf.j2
+    dest: /etc/nginx/sites-available/{{ item.value.url }}.conf
+  with_dict:
+    - "{{ virtualhosts }}"
+  when: item.key not in ['acquistaincantina']
+
+- name: Enable virtualhosts via symlink
+  file:
+    src: /etc/nginx/sites-available/{{ item.value.url }}.conf
+    dest: /etc/nginx/sites-enabled/{{ item.value.url }}.conf
+    state: link
+  with_dict:
+    - "{{ virtualhosts }}"
+  notify: reload nginx
+  when: item.key not in ['acquistaincantina']

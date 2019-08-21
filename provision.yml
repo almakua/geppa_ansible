@@ -1,14 +1,5 @@
 ---
-- hosts: LB
-  become: yes
-  gather_facts: no
-  roles: 
-    - loadbalancer_webserver 
-    - certificate
 
-- hosts: FE
-  user: "{{ neen_user }}"
-  become: yes
-  gather_facts: no
-  roles: 
-    - frontend_webserver 
+# this is the top playbook. It will handle the configuration of virtualhosts for both lb and fe
+- import_playbook: loadbalancer.yml
+- import_playbook: frontend.yml

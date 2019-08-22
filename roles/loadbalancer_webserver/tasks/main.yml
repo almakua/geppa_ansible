@@ -2,7 +2,7 @@
 
 - name: Push SSL config for virtualhosts
   template:
-    src: ssl.conf.j2
+    src: virtualhost.conf.j2
     dest: /etc/nginx/sites-available/{{ item.value.url }}.conf
   with_dict:
     - "{{ virtualhosts }}"

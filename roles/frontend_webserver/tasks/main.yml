@@ -3,48 +3,56 @@
 - name: Create custom config file
   file:
     path: /etc/nginx/conf.d/block_drill
+    state: touch
     owner: root
     group: root
 
 - name: Create custom config file
   file:
     path: /etc/nginx/conf.d/block_location
+    state: touch
     owner: root
     group: root
 
 - name: Create custom config file
   file:
     path: /etc/nginx/conf.d/block_robots
+    state: touch
     owner: root
     group: root
 
 - name: Create custom config file
   file:
     path: /etc/nginx/magento2-cors.conf
+    state: touch
     owner: root
     group: root
 
 - name: Create custom config file
   file:
     path: /etc/nginx/conf.d/php_custom
+    state: touch
     owner: root
     group: root
 
 - name: Create custom config file
   file:
     path: /etc/nginx/conf.d/root_custom
+    state: touch
     owner: root
     group: root
 
 - name: Create custom config file
   file:
     path: /etc/nginx/conf.d/map_custom
+    state: touch
     owner: root
     group: root
 
 - name: Create custom config file
   file:
     path: /etc/nginx/conf.d/main_custom
+    state: touch
     owner: root
     group: root
 
@@ -55,7 +63,6 @@
   with_dict:
     - "{{ virtualhosts }}"
   tags: nginx
-
 
 - name: Symlink to sites enabled
   file:

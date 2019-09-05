@@ -1,11 +1,13 @@
+include /etc/nginx/conf.d/map_custom;
+
 server {
-	listen 80;
-	server_name "~(www\.|origin\.)?{{item.value.url}}";
-	set $MAGE_ROOT /var/www/www.acquistaincantina.it/htdocs;
+	listen {{ fe_server }}:{{ fe_port }};
+	server_name "~(www\.|origin\.|stage\.)?{{item.value.url}}";
+	set $MAGE_ROOT /var/www/{{ site_path }}/htdocs;
 	set $MAGE_RUN_CODE {{ item.value.code }};
     set $MAGE_RUN_TYPE website;
-	access_log /var/www/www.acquistaincantina.it/logs/{{item.value.url}}_access.log;
-	error_log /var/www/www.acquistaincantina.it/logs/{{item.value.url}}_error.log;
+	access_log /var/www/{{ site_path }}/logs/{{item.value.url}}_access.log;
+	error_log /var/www/{{ site_path }}/logs/{{item.value.url}}_error.log;
 
     root $MAGE_ROOT/pub;
 
@@ -14,6 +16,16 @@ server {
     charset UTF-8;  
 
 	add_header Access-Control-Allow-Origin "*";
+
+    include /etc/nginx/conf.d/main_custom;
+	include /etc/nginx/conf.d/block_drill;
+	include /etc/nginx/conf.d/block_location;
+	include /etc/nginx/conf.d/block_robots;
+
+	location ~ /.well-known {
+		auth_basic "off";
+		root /etc/nginx/ssl/le;
+    }
 
 ##sitemap.xml
 	location ^~ /it/sitemaps { 
@@ -50,8 +62,8 @@ server {
         fastcgi_pass unix:/run/php/www.acquistaincantina.it.sock;
         fastcgi_param  SCRIPT_FILENAME  $document_root/api.php;
         include fastcgi_params;
-        access_log /var/www/www.acquistaincantina.it/logs/{{item.value.url}}_api-access.log;
-        error_log /var/www/www.acquistaincantina.it/logs/{{item.value.url}}_api-error.log;
+        access_log /var/www/{{ site_path }}/logs/{{item.value.url}}_api-access.log;
+        error_log /var/www/{{ site_path }}/logs/{{item.value.url}}_api-error.log;
     }
 
 	location /it {
@@ -108,6 +120,7 @@ server {
 
     location / {
     	try_files $uri $uri/ /index.php$is_args$args;
+        include /etc/nginx/conf.d/root_custom; 
     }
    
     rewrite ^/static/(version\d*/)?(.*)$ /static/$2 last;
@@ -170,7 +183,7 @@ server {
     location ~ (index|infoo|7p_magento|get|health_check|static|report|autocomplete|check|tnd|404|503)\.php$ {
         try_files $uri =404;
         fastcgi_split_path_info ^(.+.php)(.*)$;
-        fastcgi_pass unix:/run/php/www.acquistaincantina.it.sock;
+        fastcgi_pass unix:/run/php/{{ site_path }}.sock;
 
         fastcgi_param  MAGE_RUN_CODE $MAGE_RUN_CODE;
         fastcgi_param  MAGE_RUN_TYPE $MAGE_RUN_TYPE;
@@ -181,6 +194,7 @@ server {
         fastcgi_index  index.php;
         fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
         include        fastcgi_params;
+        include /etc/nginx/conf.d/php_custom;
     }
 
     location ~* \.php$ { return 404; }

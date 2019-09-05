@@ -1,0 +1,3 @@
+---
+varnish_server: 127.0.0.1
+varnish_port: 6081

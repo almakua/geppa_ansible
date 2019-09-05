@@ -1,5 +1,53 @@
 ---
 
+- name: Create custom config file
+  file:
+    path: /etc/nginx/conf.d/block_drill
+    owner: root
+    group: root
+
+- name: Create custom config file
+  file:
+    path: /etc/nginx/conf.d/block_location
+    owner: root
+    group: root
+
+- name: Create custom config file
+  file:
+    path: /etc/nginx/conf.d/block_robots
+    owner: root
+    group: root
+
+- name: Create custom config file
+  file:
+    path: /etc/nginx/magento2-cors.conf
+    owner: root
+    group: root
+
+- name: Create custom config file
+  file:
+    path: /etc/nginx/conf.d/php_custom
+    owner: root
+    group: root
+
+- name: Create custom config file
+  file:
+    path: /etc/nginx/conf.d/root_custom
+    owner: root
+    group: root
+
+- name: Create custom config file
+  file:
+    path: /etc/nginx/conf.d/map_custom
+    owner: root
+    group: root
+
+- name: Create custom config file
+  file:
+    path: /etc/nginx/conf.d/main_custom
+    owner: root
+    group: root
+
 - name: Push site config
   template:
     src: site.conf.j2
@@ -18,3 +66,4 @@
     - "{{ virtualhosts }}"
   notify: reload nginx
   tags: nginx
+

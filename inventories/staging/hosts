@@ -1,0 +1,11 @@
+# Add hosts here, one per line. Additional groups can be created using
+# [group] syntax. Hosts can join multiple groups.
+
+[LB]
+c003659stg00.neen.cloud ansible_host=10.10.210.17
+
+[FE]
+c003659stg00.neen.cloud ansible_host=10.10.210.17
+
+[gatewayed]
+c003659stg00.neen.cloud ansible_host=10.10.210.17

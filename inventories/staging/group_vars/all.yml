@@ -1,0 +1,23 @@
+---
+#
+ neen_user: n3556
+# 
+ loadbalancer: c003659alb00.neen.cloud
+
+# url of the site
+ site_url: ['acquistaincantina.it', 'vignetizanattashop.it', 'viniscaliaolivashop.it', 'latorderashop.it']
+
+# 
+ virtualhosts:
+  acquistaincantina:
+    url: acquistaincantina.it
+    code: acquista_in_cantina_it
+  vignetizanattashop:
+    url: vignetizanattashop.it
+    code: vignetizanatta_it
+  viniscaliaolivashop:
+    url: viniscaliaolivashop.it
+    code: viniscaliaoliva_it
+  latorderashop:
+    url: latorderashop.it
+    code: latordera_it

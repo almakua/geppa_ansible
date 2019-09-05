@@ -10,8 +10,8 @@ $ ansible-playbook -i inventories/production provision.yml
 
 or for staging
 
-$ ~~~bash
-ansible-playbook -i inventories/production provision.yml
+~~~bash
+$ ansible-playbook -i inventories/staging provision.yml
 ~~~
 
 

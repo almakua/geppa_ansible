@@ -3,7 +3,7 @@
  loadbalancer: c003659alb00.neen.cloud
 
 # url of the site
- site_url: ['acquistaincantina.it', 'vignetizanattashop.it', 'viniscaliaolivashop.it', 'latorderashop.it', brugnanoshop.it]
+ site_url: ['acquistaincantina.it', 'vignetizanattashop.it', 'viniscaliaolivashop.it', 'latorderashop.it', 'brugnanoshop.it']
 
 # 
  virtualhosts:

@@ -3,22 +3,22 @@
  loadbalancer: c003659alb00.neen.cloud
 
 # url of the site
- site_url: ['acquistaincantina.it', 'vignetizanattashop.it', 'viniscaliaolivashop.it', 'latorderashop.it', 'brugnanoshop.it']
+ site_url: ['stage.acquistaincantina.it', 'stage.vignetizanattashop.it', 'stage.viniscaliaolivashop.it', 'stage.latorderashop.it', 'stage.shop-lorenzonetto.it']
 
 # 
  virtualhosts:
   acquistaincantina:
-    url: acquistaincantina.it
+    url: stage.acquistaincantina.it
     code: acquista_in_cantina_it
   vignetizanattashop:
-    url: vignetizanattashop.it
+    url: stage.vignetizanattashop.it
     code: vignetizanatta_it
   viniscaliaolivashop:
-    url: viniscaliaolivashop.it
+    url: stage.viniscaliaolivashop.it
     code: viniscaliaoliva_it
   latorderashop:
-    url: latorderashop.it
+    url: stage.latorderashop.it
     code: latordera_it
-  brugnanoshop:
-    url: brugnanoshop.it
-    code: brugnanoshop_it
+  shoplorenzonetto:
+    url: stage.shop-lorenzonetto.it
+    code: lorenzonetto_it

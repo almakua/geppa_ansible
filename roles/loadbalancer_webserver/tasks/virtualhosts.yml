@@ -1,0 +1,84 @@
+---
+
+- name: Create custom config file
+  file:
+    path: /etc/nginx/conf.d/block_drill
+    state: touch
+    owner: root
+    group: root
+
+- name: Create custom config file
+  file:
+    path: /etc/nginx/conf.d/block_location
+    state: touch
+    owner: root
+    group: root
+
+- name: Create custom config file
+  file:
+    path: /etc/nginx/conf.d/block_robots
+    state: touch
+    owner: root
+    group: root
+
+- name: Create custom config file
+  file:
+    path: /etc/nginx/magento2-cors.conf
+    state: touch
+    owner: root
+    group: root
+
+- name: Create custom config file
+  file:
+    path: /etc/nginx/conf.d/php_custom
+    state: touch
+    owner: root
+    group: root
+
+- name: Create custom config file
+  file:
+    path: /etc/nginx/conf.d/root_custom
+    state: touch
+    owner: root
+    group: root
+
+- name: Create custom config file
+  file:
+    path: /etc/nginx/conf.d/map_custom
+    state: touch
+    owner: root
+    group: root
+
+- name: Create custom config file
+  file:
+    path: /etc/nginx/conf.d/main_custom
+    state: touch
+    owner: root
+    group: root
+
+- name: Create custom config file
+  file:
+    path: /etc/nginx/conf.d/le_wellknown
+    state: touch
+    owner: root
+    group: root
+
+- name: Push SSL config for virtualhosts
+  template:
+    src: virtualhost.conf.j2
+    dest: /etc/nginx/sites-available/reverse.{{ item.value.url }}.conf
+  with_dict:
+    - "{{ virtualhosts }}"
+#  when: item.key not in ['acquistaincantina']
+  tags: nginx
+
+- name: Enable virtualhosts via symlink
+  file:
+    src: /etc/nginx/sites-available/reverse.{{ item.value.url }}.conf
+    dest: /etc/nginx/sites-enabled/reverse.{{ item.value.url }}.conf
+    state: link
+  with_dict:
+    - "{{ virtualhosts }}"
+  notify: reload nginx
+#  when: item.key not in ['acquistaincantina']
+  tags: nginx

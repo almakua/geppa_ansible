@@ -1,3 +1,6 @@
 ---
-varnish_server:
-varnish_port:
+# Varnish backends definition.
+ varnish_backends:
+   c003659app00:
+     host: 10.10.210.17
+     port: 80

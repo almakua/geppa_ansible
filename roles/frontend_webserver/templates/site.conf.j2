@@ -199,11 +199,12 @@ server {
 
     location ~* \.php$ { return 404; }
 
-    location = /robots.txt {
-        allow all;
-        log_not_found off;
-        access_log off;
-    }
+# configure robots inside /etc/nginx/conf.d/block_robots.conf
+#    location = /robots.txt {
+#        allow all;
+#        log_not_found off;
+#        access_log off;
+#    }
 
     add_header X_Powered_By "neen";
 

@@ -20,22 +20,22 @@
 - name: enable ssl certificates
   replace:
 #    backup: yes
-    dest: /etc/nginx/sites-available/{{ item.value.url }}.conf
+    dest: /etc/nginx/sites-available/reverse.{{ item.value.url }}.conf
     regexp: '#      ssl_certificate /etc/letsencrypt/live/{{ item.value.url }}/fullchain.pem;'
     replace: '      ssl_certificate /etc/letsencrypt/live/{{ item.value.url }}/fullchain.pem;'
   with_dict:
     - "{{ virtualhosts }}"
-  when: item.key not in ['acquistaincantina']
+#  when: item.key not in ['acquistaincantina']
   tags: nginx
 
 - name: enable ssl certificate key
   replace:
 #    backup: yes
-    dest: /etc/nginx/sites-available/{{ item.value.url }}.conf
+    dest: /etc/nginx/sites-available/reverse.{{ item.value.url }}.conf
     regexp: '#      ssl_certificate_key /etc/letsencrypt/live/{{ item.value.url }}/privkey.pem;'
     replace: '      ssl_certificate_key /etc/letsencrypt/live/{{ item.value.url }}/privkey.pem;'
   with_dict:
     - "{{ virtualhosts }}"
-  when: item.key not in ['acquistaincantina']
+#  when: item.key not in ['acquistaincantina']
   notify: reload nginx
   tags: nginx

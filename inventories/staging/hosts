@@ -2,10 +2,10 @@
 # [group] syntax. Hosts can join multiple groups.
 
 [LB]
-c003659stg00.neen.cloud ansible_host=10.10.210.17
+c003659stg00.neen.cloud ansible_host=10.10.210.8
 
 [FE]
-c003659stg00.neen.cloud ansible_host=10.10.210.17
+c003659stg00.neen.cloud ansible_host=10.10.210.8
 
 [gatewayed]
-c003659stg00.neen.cloud ansible_host=10.10.210.17
+c003659stg00.neen.cloud ansible_host=10.10.210.8

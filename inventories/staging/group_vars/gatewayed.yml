@@ -1,1 +1,1 @@
-ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -q {{loadbalancer}}"'
+ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -q {{bastion_host}}"'

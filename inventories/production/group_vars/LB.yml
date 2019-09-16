@@ -1,6 +1,10 @@
 ---
-# Varnish backends definition.
+# Dictionary that defines Varnish backends. Here you need to specify each one of the server in the frontend pool.
  varnish_backends:
    c003659app00:
      host: 10.10.210.17
      port: 80
+
+# Varnish server variables, to be configured in nginx with the proxypass command
+ varnish_server: 127.0.0.1
+ varnish_port: 6081

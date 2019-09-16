@@ -1,11 +1,11 @@
 ---
-#
- loadbalancer: c003659alb00.neen.cloud
+# Explicit the bastion host name, this is the server through which you connect to IE the frontend serversloadbalancer
+ bastion_host: c003659alb00.neen.cloud
 
-# url of the site
+# array with which you explocitely specify the addresses for all the sites that you need to deploy
  site_url: ['stage.acquistaincantina.it', 'stage.vignetizanattashop.it', 'stage.viniscaliaolivashop.it', 'stage.latorderashop.it', 'stage.shop-lorenzonetto.it']
 
-# 
+# dictionary that associate sites url to magento run code for each one of the sites
  virtualhosts:
   acquistaincantina:
     url: stage.acquistaincantina.it

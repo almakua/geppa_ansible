@@ -35,7 +35,7 @@ You should modify them as you need it, and then execute the playbook
 
 ## Usage
 
-To execute the playbook, you have to specify the env's dedicated inventory, and input your neen user to ansible-playbook.
+To execute the playbook, you have to have full sudo powers on the target server, since the playbook need to become root to be completed, and you have to specify the env's dedicated inventory, and input your neen user to ansible-playbook.
 
 For production:
 

@@ -1,9 +1,9 @@
 ---
 # path in /var/www/ where the whole htdocs and logs resides
-site_path: "www.acquistinincantina.it"
+site_path: "www.acquistaincantina.it"
 
 # server and port on which nginx listen for new connections in frontend. Server is not needed to be specified, you can leave it empty 
 # IE
 # fe_server: ""
-fe_server: ""
+fe_server: "10.10.210.17"
 fe_port: "80"

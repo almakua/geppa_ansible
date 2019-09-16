@@ -19,7 +19,7 @@ The playbook is already structured in a way which can easily executed on both st
 
 Inventories for the 2 envs have been already created and configured.
 
-To configure the hosts on which the playbook is run against, you have to modify the file _*inventories/<ENV>/hosts*_ , specifiying on which group the server should reside.
+To configure the hosts on which the playbook is run against, you have to modify the file _*inventories/< ENV >/hosts*_ , specifiying on which group the server should reside.
 
 The groups are:
 
@@ -29,7 +29,7 @@ The groups are:
 |FE   	|FrontEnd group, in which servers that populates it are the one on which PHP runs   	|
 |Gatewayed   	|Group dedicated solely for the hosts that need a bastion hosts to connect through to be reached. 	|
 
-Each one of this groups have their own configuration yaml file in _*inventories/<ENV>/group_vars/<GROUP>.yml*_ , in which group specific configuration are explicitely set.
+Each one of this groups have their own configuration yaml file in _*inventories/< ENV >/group_vars/< GROUP >.yml*_ , in which group specific configuration are explicitely set.
 
 You should modify them as you need it, and then execute the playbook
 

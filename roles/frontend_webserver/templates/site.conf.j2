@@ -2,7 +2,7 @@ include /etc/nginx/conf.d/map_custom;
 
 server {
 	listen {{ fe_server }}:{{ fe_port }};
-	server_name "~(www\.|origin\.|stage\.)?{{item.value.url}}";
+	server_name "~(www\.|origin\.|stage\.)?{{item.value.url}}" {{item.value.url}};
 	set $MAGE_ROOT /var/www/{{ site_path }}/htdocs;
 	set $MAGE_RUN_CODE {{ item.value.code }};
     set $MAGE_RUN_TYPE website;

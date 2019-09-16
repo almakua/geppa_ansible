@@ -48,3 +48,7 @@ and for staging:
 ~~~bash
 $ ansible-playbook -i inventories/staging provision.yml -u <NEEN_USER>
 ~~~
+
+## TO DO
+1. handle certificate installation, like, if the server has a domain name configured, then install letsencrypt, if not, self signed
+2. handle fe_server population in case multiple frontends

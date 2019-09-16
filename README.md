@@ -10,7 +10,7 @@ The goal will be to implemente a full playbook to install from scratch a new fro
 
 You just need to have git and ansible (2.0 +) installed on your machine/server, and then you just have to clone the repo like so:
 ```bash
-git clone <GIT_SERVER_URL>/geppa_ansible.git
+$ git clone <GIT_SERVER_URL>/geppa_ansible.git
 ```
 
 ## Configuration

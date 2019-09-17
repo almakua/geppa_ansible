@@ -19,7 +19,7 @@ The playbook is already structured in a way which can easily executed on both st
 
 Inventories for the 2 envs have been already created and configured.
 
-To configure the hosts on which the playbook is run against, you have to modify the file _*inventories/< ENV >/hosts*_ , specifiying on which group the server should reside.
+To configure the hosts on which the playbook is run against, you have to modify the file _*inventories/< ENV >/hosts*_ , specifiying on which group the server belong.
 
 The groups are:
 

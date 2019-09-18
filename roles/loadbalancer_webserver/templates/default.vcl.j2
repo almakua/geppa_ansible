@@ -24,6 +24,16 @@ acl purge {
     "localhost";
 }
 
+#sub vcl_init
+#{
+#  new cluster = directors.round_robin();
+#{% for backend, value in varnish_backends.items() | list %} 
+#  cluster.add_backend({{ backend }});
+#{% endfor %}
+#}
+
+
+
 sub vcl_recv {
 
     if (req.method == "PURGE") {

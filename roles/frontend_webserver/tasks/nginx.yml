@@ -15,6 +15,6 @@
     state: link
   with_dict:
     - "{{ virtualhosts }}"
-  notify: reload nginx
+  notify: restart nginx
   tags: nginx
 

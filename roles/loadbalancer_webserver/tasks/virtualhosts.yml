@@ -79,6 +79,6 @@
     state: link
   with_dict:
     - "{{ virtualhosts }}"
-  notify: reload nginx
+  notify: restart nginx
 #  when: item.key not in ['acquistaincantina']
   tags: nginx

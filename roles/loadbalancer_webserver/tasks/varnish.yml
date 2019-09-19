@@ -10,9 +10,8 @@
   template:
     src: default.vcl.j2
     dest: /etc/varnish/default.vcl
+    backup: yes
   with_dict:
     - "{{ varnish_backends }}"
   tags: varnish
-
-#- name: restart varnish
-#  tags: varnish
+  notify: reload varnish

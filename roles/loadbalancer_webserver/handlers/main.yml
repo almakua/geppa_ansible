@@ -8,3 +8,13 @@
   service: 
     name: nginx
     state: reloaded
+
+- name: reload varnish
+  service:
+    name: varnish
+    state: reloaded
+
+- name: restart varnish
+  service:
+    name: varnish
+    state: restarted

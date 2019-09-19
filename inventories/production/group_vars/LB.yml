@@ -8,3 +8,4 @@
 # Varnish server variables, to be configured in nginx with the proxypass command
  varnish_server: 10.10.210.13
  varnish_port: 6081
+ varnish_purge_subnet: 10.10.210.0/24

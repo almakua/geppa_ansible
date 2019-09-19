@@ -25,3 +25,6 @@
   pasquashop:
     url: stage.pasquashop.it
     code: pasqua_it
+  brugnanoshop:
+    url: stage.brugnanoshop.it
+    code: brugnanoshop_it

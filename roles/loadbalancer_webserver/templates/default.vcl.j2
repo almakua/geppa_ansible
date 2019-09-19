@@ -1,7 +1,11 @@
 # VCL version 5.0 is not supported so it should be 4.0 even though actually used Varnish version is 5
 vcl 4.0;
-
+# import standard functions
 import std;
+
+# import functions to enable load balancer mode
+import directors;
+
 # The minimal Varnish version is 5.0
 # For SSL offloading, pass the following header in your proxy server or load balancer: 'X-Forwarded-Proto: https'
 
@@ -22,19 +26,22 @@ backend {{ backend }} {
 
 acl purge {
     "localhost";
+    "{{ varnish_purge_subnet }}";
 }
 
-#sub vcl_init
-#{
-#  new cluster = directors.round_robin();
-#{% for backend, value in varnish_backends.items() | list %} 
-#  cluster.add_backend({{ backend }});
-#{% endfor %}
-#}
+sub vcl_init
+{
+  new cluster = directors.round_robin();
+{% for backend, value in varnish_backends.items() | list %} 
+  cluster.add_backend({{ backend }});
+{% endfor %}
+}
 
 
 
 sub vcl_recv {
+
+    set req.backend_hint = cluster.backend();
 
     if (req.method == "PURGE") {
         if (client.ip !~ purge) {

@@ -21,6 +21,7 @@ server {
 	include /etc/nginx/conf.d/block_drill;
 	include /etc/nginx/conf.d/block_location;
 	include /etc/nginx/conf.d/block_robots;
+    include /var/www/{{ site_path }}/custom_conf/{{ item.value.code }}.conf;
 
 	location ~ /.well-known {
 		auth_basic "off";

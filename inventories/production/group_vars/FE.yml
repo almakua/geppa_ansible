@@ -7,3 +7,6 @@ site_path: "www.acquistaincantina.it"
 # fe_server: ""
 fe_server: "10.10.210.17"
 fe_port: "80"
+
+
+frontend_user: "gpprod"

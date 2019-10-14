@@ -7,3 +7,6 @@ site_path: "stage.acquistaincantina.it"
 # fe_server: ""
 fe_server: "127.0.0.1"
 fe_port: "8080"
+
+
+frontend_user: "gpstg"

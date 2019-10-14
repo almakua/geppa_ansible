@@ -1,5 +1,23 @@
 ---
 
+- name: create seo config folder
+  file:
+    path: /var/www/{{ site_path }}/custom_conf
+    state: directory
+    owner: "{{ frontend_user }}"
+    group: "{{ frontend_user }}"
+  tags: nginx
+
+- name: create seo config for each virtualhost
+  file:
+    path: /var/www/{{ site_path }}/custom_conf/{{ item.value.code }}.conf
+    state: touch
+    owner: "{{ frontend_user }}"
+    group: "{{ frontend_user }}"
+  with_dict:
+    - "{{ virtualhosts }}"
+  tags: nginx
+
 - name: Push site config
   template:
     src: site.conf.j2
@@ -17,4 +35,3 @@
     - "{{ virtualhosts }}"
   notify: restart nginx
   tags: nginx
-

@@ -9,3 +9,4 @@
  varnish_server: 10.10.210.13
  varnish_port: 6081
  varnish_purge_subnet: 10.10.210.0/24
+ xrobots_tag: " "

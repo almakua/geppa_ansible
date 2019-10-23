@@ -246,7 +246,7 @@ sub vcl_deliver {
         set resp.http.Cache-Control = "no-store, no-cache, must-revalidate, max-age=0";
     }
 
-	set resp.http.X-Robots-Tag = "noindex, nofollow, nosnippet, noarchive";
+	set resp.http.X-Robots-Tag = "{{ xrobots_tag }}";
 
     unset resp.http.X-Magento-Debug;
     unset resp.http.X-Magento-Tags;

@@ -9,3 +9,4 @@
  varnish_server: 127.0.0.1
  varnish_port: 6081
  varnish_purge_subnet: 10.10.210.0/24
+ xrobots_tag: "noindex, nofollow, nosnippet, noarchive"

@@ -31,3 +31,9 @@
   cantineborga:
     url: stage.shop-cantineborga.it
     code: borga_it
+  frassina:
+    url: stage.shop-frassina.it
+    code: frassina_it
+  poderideltodero:
+    url: stage.shop-poderideltodero.it
+    code: poderideltodero_it

@@ -3,7 +3,7 @@
  bastion_host: c003659alb00.neen.cloud
 
 # array with which you explocitely specify the addresses for all the sites that you need to deploy
- site_url: ['stage.acquistaincantina.it', 'stage.vignetizanattashop.it', 'stage.viniscaliaolivashop.it', 'stage.latorderashop.it', 'stage.shop-lorenzonetto.it', 'stage.pasquashop.it','stage.shop-cantineborga.it']
+ site_url: ['stage.acquistaincantina.it', 'stage.vignetizanattashop.it', 'stage.viniscaliaolivashop.it', 'stage.latorderashop.it', 'stage.shop-lorenzonetto.it', 'stage.pasquashop.it','stage.shop-cantineborga.it', 'stage.shopenotriatellus.it']
 
 # dictionary that associate sites url to magento run code for each one of the sites
  virtualhosts:
@@ -37,3 +37,6 @@
   poderideltodero:
     url: stage.shop-poderideltodero.it
     code: poderideltodero_it
+  shopenotriatellus:
+    url: stage.shopenotriatellus.it
+    code: enotriatellus_it

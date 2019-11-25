@@ -1,0 +1,42 @@
+# version 1.0
+
+server {
+      listen 80;
+      listen 443 ssl http2;
+      server_tokens off;
+      server_name www.{{ item.value.url }} {{ item.value.url }};
+
+      if ( $scheme = "http" ) {
+          rewrite ^(.*)$    https://$host$1 permanent;
+      }
+
+      ssl_certificate /etc/letsencrypt/live/{{ item.value.url }}/fullchain.pem;
+      ssl_certificate_key /etc/letsencrypt/live/{{ item.value.url }}/privkey.pem;
+
+      access_log /var/log/nginx/{{ item.value.url }}-access.log;
+      error_log /var/log/nginx/{{ item.value.url }}-error.log;
+
+      include conf.d/le_wellknown;
+      include conf.d/block_drill;
+      include conf.d/block_location;      
+
+      location / {
+          proxy_pass    http://{{ varnish_server }}:{{ varnish_port }};
+          proxy_set_header        Accept-Encoding   "";
+          proxy_set_header        Connection         "";
+          proxy_set_header        Host              $host;
+          proxy_set_header        X-Forwarded-Host  $http_host;
+          proxy_set_header        X-Real-IP         $remote_addr;
+          proxy_set_header        X-Forwarded-For   $proxy_add_x_forwarded_for;
+          proxy_set_header        X-Forwarded-Proto https;
+          proxy_set_header        X-Forwarded-Port  443;
+          proxy_hide_header       X-Powered-By;
+          proxy_http_version 1.1;
+          proxy_connect_timeout   600;
+          proxy_send_timeout      600;
+          proxy_read_timeout      600;
+          send_timeout            600;
+          proxy_set_header  Ssl-Offloaded     "1";
+      }
+
+}

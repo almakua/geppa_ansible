@@ -21,7 +21,6 @@ server {
 
       location / {
           proxy_pass    http://{{ varnish_server }}:{{ varnish_port }};
-          #proxy_pass    http://frontend;
           proxy_set_header        Accept-Encoding   "";
           proxy_set_header        Connection         "";
           proxy_set_header        Host              $host;

@@ -3,7 +3,7 @@
  bastion_host: c003659alb00.neen.cloud
 
 # array with which you explocitely specify the addresses for all the sites that you need to deploy
- site_url: ['acquistaincantina.it', 'vignetizanattashop.it', 'viniscaliaolivashop.it', 'latorderashop.it', 'brugnanoshop.it', 'pasquashop.it', 'shop-lorenzonetto.it', 'shop-cantineborga.it','shopenotriatellus.it']
+ site_url: ['acquistaincantina.it', 'vignetizanattashop.it', 'viniscaliaolivashop.it', 'latorderashop.it', 'brugnanoshop.it', 'pasquashop.it', 'shop-lorenzonetto.it', 'shop-cantineborga.it','shopenotriatellus.it', 'shop-vinimolon.it']
 
 # dictionary that associate sites url to magento run code for each one of the sites
  virtualhosts:
@@ -43,3 +43,6 @@
   bellinicanellashop:
     url: bellinicanellashop.it
     code: bellinicanella_it
+  shopvinimolon:
+    url: shop-vinimolon.it
+    code: molon_it

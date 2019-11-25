@@ -9,11 +9,12 @@
   tags: nginx
 
 - name: create seo config for each virtualhost
-  file:
-    path: /var/www/{{ site_path }}/custom_conf/{{ item.value.code }}.conf
-    state: touch
+  template:
+    src: seo.conf.j2
+    dest: /var/www/{{ site_path }}/custom_conf/{{ item.value.code }}.conf
     owner: "{{ frontend_user }}"
     group: "{{ frontend_user }}"
+    force: no
   with_dict:
     - "{{ virtualhosts }}"
   tags: nginx
@@ -22,6 +23,7 @@
   template:
     src: site.conf.j2
     dest: /etc/nginx/sites-available/{{ item.value.url }}.conf
+    force: no
   with_dict:
     - "{{ virtualhosts }}"
   tags: nginx

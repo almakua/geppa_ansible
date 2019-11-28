@@ -1,5 +1,49 @@
 ---
 
+- name: Ensure python OpenSSL dependencies are installed.
+  pip:
+    name: pyOpenSSL
+    state: present
+
+#- name: Ensure directory exists for local self-signed TLS certs.
+#  file:
+#    path: /etc/letsencrypt/live/{{ item.value.url }}
+#    state: directory
+#  with_dict:
+#    - "{{ virtualhosts }}"
+#
+#- name: Generate an OpenSSL private key.
+#  openssl_privatekey:
+#    path: /etc/letsencrypt/live/{{ item.value.url }}/privkey.pem
+#  with_dict:
+#    - "{{ virtualhosts }}"
+#
+#- name: Generate an OpenSSL CSR.
+#  openssl_csr:
+#    path: /etc/ssl/private/{{ item.value.url }}.csr
+#    privatekey_path: /etc/letsencrypt/live/{{ item.value.url }}/privkey.pem
+#    common_name: "{{ item.value.url }}"
+#  with_dict:
+#    - "{{ virtualhosts }}"
+#
+#- name: Generate a Self Signed OpenSSL certificate.
+#  openssl_certificate:
+#    path: /etc/letsencrypt/live/{{ item.value.url }}/fullchain.pem
+#    privatekey_path: /etc/letsencrypt/live/{{ item.value.url }}/privkey.pem
+#    csr_path: /etc/ssl/private/{{ item.value.url }}.csr
+#    provider: selfsigned
+#  with_dict:
+#    - "{{ virtualhosts }}"
+#
+#- name: Generate a Self Signed OpenSSL certificate
+#  openssl_certificate:
+#    path: /etc/letsencrypt/live/{{ item.value.url }}/ansible.com.crt
+#    privatekey_path: /etc/letsencrypt/live/{{ item.value.url }}/ansible.com.pem
+#    csr_path: /etc/letsencrypt/live/{{ item.value.url }}/ansible.com.csr
+#    provider: selfsigned
+#  with_dict:
+#    - "{{ virtualhosts }}"
+
 - name: Push  SSL config for virtualhosts
   template:
     src: virtualhost.conf.j2

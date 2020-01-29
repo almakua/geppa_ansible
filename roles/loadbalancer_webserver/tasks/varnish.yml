@@ -6,6 +6,11 @@
     update_cache: yes
   tags: varnish
 
+- name: check if stage
+  stat: 
+    path: /etc/varnish/stage.ansible.status
+  register: stagestatus
+
 - name: apply default neen config for varnish
   template:
     src: default.vcl.j2
@@ -15,3 +20,4 @@
     - "{{ varnish_backends }}"
   tags: varnish
   notify: reload varnish
+  when: stagestatus.stat.exists == false

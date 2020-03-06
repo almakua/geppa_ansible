@@ -44,6 +44,41 @@
 #  with_dict:
 #    - "{{ virtualhosts }}"
 
+
+## Variables for Role Certbot certs.
+#certbot_create_if_missing: false
+#certbot_create_method: standalone
+#certbot_admin_email: youremailidcertbot_create_standalone_stop_services:
+#  - nginxapache_vhosts:
+#    - {servername: "abcyourdomain.com", documentroot: "/var/www/abcyourdomain.com"}
+#    - {servername: "abcyourdomain1.com", documentroot: "/var/www/abcyourdomain1.com"}
+#
+#- name: Upgrade System
+#  apt: upgrade=dist update_cache=yes- name: Add certbot repository
+#  apt_repository:
+#   repo: 'ppa:certbot/certbot'- name: Install Certbot's Nginx package
+#  apt:
+#   name: python-certbot-nginx
+#   state: present
+#   
+#- name: Check if certificate already exists.
+#  stat:
+#    path: /etc/letsencrypt/live/{{ item.servername}}/cert.pem
+#  register: letsencrypt_cert
+#  with_items: "{{ apache_vhosts }}"- name: Stop services to allow certbot to generate a cert.
+#  service:
+#    name: "{{ item }}"
+#    state: stopped
+#  with_items:
+#          -  "{{ certbot_create_standalone_stop_services }}"- name: Generate new certificate if one doesn't exist.
+#  shell: "certbot certonly --standalone --noninteractive --agree-tos --email {{ certbot_admin_email }} -d {{ item.item.servername}}"
+#  with_items: "{{ letsencrypt_cert.results }}"
+#  when: item.stat.exists == False- name: Start services after cert has been generated.
+#  service:
+#    name: "{{ item }}"
+#    state: started
+#  with_items: "{{ certbot_create_standalone_stop_services }}"
+
 - name: Push  SSL config for virtualhosts
   template:
     src: virtualhost.conf.j2

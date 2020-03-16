@@ -3,7 +3,7 @@
  bastion_host: c003659alb00.neen.cloud
 
 # array with which you explocitely specify the addresses for all the sites that you need to deploy
- site_url: ['stage.acquistaincantina.it', 'stage.vignetizanattashop.it', 'stage.viniscaliaolivashop.it', 'stage.latorderashop.it', 'stage.shop-lorenzonetto.it', 'stage.pasquashop.it','stage.shop-cantineborga.it', 'stage.shopenotriatellus.it', 'stage.bellinicanellashop.it', 'stage.shop-vinimolon.it', 'stage.shop-cantinevedova.com', 'stage.cantinatrexentashop.it', 'stage.shop-barbaran.it','stage.shop-aziendacasere.com']
+# site_url: ['stage.acquistaincantina.it', 'stage.vignetizanattashop.it', 'stage.viniscaliaolivashop.it', 'stage.latorderashop.it', 'stage.shop-lorenzonetto.it', 'stage.pasquashop.it','stage.shop-cantineborga.it', 'stage.shopenotriatellus.it', 'stage.bellinicanellashop.it', 'stage.shop-vinimolon.it', 'stage.shop-cantinevedova.com', 'stage.cantinatrexentashop.it', 'stage.shop-barbaran.it','stage.shop-aziendacasere.com','stage.shop-pravis.it','stage.uccellierashop.it','stage.shop-vintinove.com']
 
 # dictionary that associate sites url to magento run code for each one of the sites
  virtualhosts:
@@ -58,3 +58,21 @@
   aziendacasere:
     url: stage.shop-aziendacasere.com
     code: casere_com
+  shoppravis:
+    url: stage.shop-pravis.it
+    code: pravis_it
+  uccellierashop:
+    url: stage.uccellierashop.it
+    code: uccelliera_it
+  shopvintinove:
+    url: stage.shop-vintinove.com
+    code: vintinove_com
+  baccichetto:
+    url: stage.baccichettovinishop.it
+    code: baccichetto_it
+
+# list for vhosts with self signed certs
+ selfsigned_hosts: [ 'stage.cembranidoc.it', 'stage.shop-aziendacasere.com', 'stage.shop-barbaran.it', 'stage.shop-pravis.it', 'stage.shop-vinimolon.it', 'stage.shop-vintinove.com', 'stage.uccellierashop.it', stage.baccichettovinishop.it ]
+
+ # list for vhosts with LE certs
+ letsencrypt_hosts: [ 'stage.acquistaincantina.it', 'stage.bellinicanellashop.it', 'stage.brugnanoshop.it', 'stage.cantinatrexentashop.it', 'stage.cavenzonashop.it', 'stage.latorderashop.it', 'stage.pasquashop.it', 'stage.shop-cantineborga.it', 'stage.shop-cantinevedova.com', 'stage.shop-frassina.it', 'stage.shop-lorenzonetto.it', 'stage.shop-poderideltodero.it', 'stage.shopenotriatellus.it', 'stage.vignetizanattashop.it', 'stage.viniscaliaolivashop.it' ]

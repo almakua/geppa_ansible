@@ -2,9 +2,6 @@
 # Explicit the bastion host name, this is the server through which you connect to IE the frontend serversloadbalancer
  bastion_host: c003659alb00.neen.cloud
 
-# array with which you explocitely specify the addresses for all the sites that you need to deploy
- site_url: ['acquistaincantina.it', 'vignetizanattashop.it', 'viniscaliaolivashop.it', 'latorderashop.it', 'brugnanoshop.it', 'pasquashop.it', 'shop-lorenzonetto.it', 'shop-cantineborga.it','shopenotriatellus.it', 'shop-vinimolon.it', 'cantinatrexentashop.it', 'shop-cantinevedova.com', 'shop-barbaran.it','shop-aziendacasere.com']
-
 # dictionary that associate sites url to magento run code for each one of the sites
  virtualhosts:
   acquistaincantina:
@@ -58,3 +55,21 @@
   aziendacasere:
     url: shop-aziendacasere.com
     code: casere_com
+  shoppravis:
+    url: shop-pravis.it
+    code: pravis_it
+  uccellierashop:
+    url: uccellierashop.it
+    code: uccelliera_it
+  shopvintinove:
+    url: shop-vintinove.com
+    code: vintinove_com
+  baccichetto:
+    url: baccichettovinishop.it
+    code: baccichetto_it
+
+ # list for vhosts with self signed certs
+ selfsigned_hosts: [ 'cembranidoc.it', 'shop-aziendacasere.com', 'shop-barbaran.it', 'shop-pravis.it', 'shop-vintinove.com', 'uccellierashop.it' ]
+
+ # list for vhosts with LE certs
+ letsencrypt_hosts: [ 'acquistaincantina.it', 'bellinicanellashop.it', 'brugnanoshop.it', 'cantinatrexentashop.it', 'cavenzonashop.it', 'latorderashop.it', 'pasquashop.it', 'shop-cantineborga.it', 'shop-cantinevedova.com', 'shop-frassina.it', 'shop-lorenzonetto.it', 'shop-poderideltodero.it', 'shopenotriatellus.it', 'vignetizanattashop.it', 'viniscaliaolivashop.it', 'shop-vinimolon.it', 'baccichettovinishop.it' ]

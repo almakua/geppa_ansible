@@ -4,82 +4,67 @@
   pip:
     name: pyOpenSSL
     state: present
+  tags: ssl
 
-#- name: Ensure directory exists for local self-signed TLS certs.
-#  file:
-#    path: /etc/letsencrypt/live/{{ item.value.url }}
-#    state: directory
-#  with_dict:
-#    - "{{ virtualhosts }}"
-#
-#- name: Generate an OpenSSL private key.
-#  openssl_privatekey:
-#    path: /etc/letsencrypt/live/{{ item.value.url }}/privkey.pem
-#  with_dict:
-#    - "{{ virtualhosts }}"
-#
-#- name: Generate an OpenSSL CSR.
-#  openssl_csr:
-#    path: /etc/ssl/private/{{ item.value.url }}.csr
-#    privatekey_path: /etc/letsencrypt/live/{{ item.value.url }}/privkey.pem
-#    common_name: "{{ item.value.url }}"
-#  with_dict:
-#    - "{{ virtualhosts }}"
-#
-#- name: Generate a Self Signed OpenSSL certificate.
-#  openssl_certificate:
-#    path: /etc/letsencrypt/live/{{ item.value.url }}/fullchain.pem
-#    privatekey_path: /etc/letsencrypt/live/{{ item.value.url }}/privkey.pem
-#    csr_path: /etc/ssl/private/{{ item.value.url }}.csr
-#    provider: selfsigned
-#  with_dict:
-#    - "{{ virtualhosts }}"
-#
-#- name: Generate a Self Signed OpenSSL certificate
-#  openssl_certificate:
-#    path: /etc/letsencrypt/live/{{ item.value.url }}/ansible.com.crt
-#    privatekey_path: /etc/letsencrypt/live/{{ item.value.url }}/ansible.com.pem
-#    csr_path: /etc/letsencrypt/live/{{ item.value.url }}/ansible.com.csr
-#    provider: selfsigned
-#  with_dict:
-#    - "{{ virtualhosts }}"
+- name: Ensure directory exists for local self-signed TLS certs.
+  file:
+    path: /etc/letsencrypt/live/{{ item }}
+    state: directory
+  with_items: "{{ selfsigned_hosts }}"
+  notify: restart nginx
+  tags: ssl
 
+- name: Generate an OpenSSL private key.
+  openssl_privatekey:
+    path: /etc/letsencrypt/live/{{ item }}/privkey.pem
+  with_items: "{{ selfsigned_hosts }}"
+  notify: restart nginx
+  tags: ssl
 
-## Variables for Role Certbot certs.
-#certbot_create_if_missing: false
-#certbot_create_method: standalone
-#certbot_admin_email: youremailidcertbot_create_standalone_stop_services:
-#  - nginxapache_vhosts:
-#    - {servername: "abcyourdomain.com", documentroot: "/var/www/abcyourdomain.com"}
-#    - {servername: "abcyourdomain1.com", documentroot: "/var/www/abcyourdomain1.com"}
-#
-#- name: Upgrade System
-#  apt: upgrade=dist update_cache=yes- name: Add certbot repository
-#  apt_repository:
-#   repo: 'ppa:certbot/certbot'- name: Install Certbot's Nginx package
-#  apt:
-#   name: python-certbot-nginx
-#   state: present
-#   
-#- name: Check if certificate already exists.
-#  stat:
-#    path: /etc/letsencrypt/live/{{ item.servername}}/cert.pem
-#  register: letsencrypt_cert
-#  with_items: "{{ apache_vhosts }}"- name: Stop services to allow certbot to generate a cert.
-#  service:
-#    name: "{{ item }}"
-#    state: stopped
-#  with_items:
-#          -  "{{ certbot_create_standalone_stop_services }}"- name: Generate new certificate if one doesn't exist.
-#  shell: "certbot certonly --standalone --noninteractive --agree-tos --email {{ certbot_admin_email }} -d {{ item.item.servername}}"
-#  with_items: "{{ letsencrypt_cert.results }}"
-#  when: item.stat.exists == False- name: Start services after cert has been generated.
-#  service:
-#    name: "{{ item }}"
-#    state: started
-#  with_items: "{{ certbot_create_standalone_stop_services }}"
+- name: Generate an OpenSSL CSR.
+  openssl_csr:
+    path: /etc/ssl/private/{{ item }}.csr
+    privatekey_path: /etc/letsencrypt/live/{{ item }}/privkey.pem
+    common_name: "{{ item }}"
+  with_items: "{{ selfsigned_hosts }}"
+  notify: restart nginx
+  tags: ssl
 
-- name: Push  SSL config for virtualhosts
+- name: Generate a Self Signed OpenSSL certificate.
+  openssl_certificate:
+    path: /etc/letsencrypt/live/{{ item }}/fullchain.pem
+    privatekey_path: /etc/letsencrypt/live/{{ item }}/privkey.pem
+    csr_path: /etc/ssl/private/{{ item }}.csr
+    provider: selfsigned
+  with_items: "{{ selfsigned_hosts }}"
+  notify: restart nginx
+  tags: ssl
+
+- name: install certbot
+  apt:
+    name: certbot
+    update_cache: yes
+  tags: letsencrypt
+
+- name: check if stage
+  stat: 
+    path: /etc/varnish/stage.ansible.status
+  register: stagestatus
+  tags: letsencrypt
+
+- name: execute certbot for the stage virtualhosts
+  shell: "certbot certonly --nginx --noninteractive -d {{ item }}"
+  with_items: "{{ letsencrypt_hosts }}"
+  tags: letsencrypt
+  when: stagestatus.stat.exists == true
+
+- name: execute certbot for the prod virtualhosts
+  shell: "certbot certonly --nginx --noninteractive -d {{ item }} -d www.{{ item }}"
+  with_items: "{{ letsencrypt_hosts }}"
+  tags: letsencrypt
+  when: stagestatus.stat.exists == false
+
+- name: Push SSL config for virtualhosts
   template:
     src: virtualhost.conf.j2
     dest: /etc/nginx/sites-available/reverse.{{ item.value.url }}.conf

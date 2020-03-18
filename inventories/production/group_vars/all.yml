@@ -67,9 +67,13 @@
   baccichetto:
     url: baccichettovinishop.it
     code: baccichetto_it
+  ersteneue:
+    url: shop-erste-neue.it
+    code: ersteneue_it
+
 
  # list for vhosts with self signed certs
- selfsigned_hosts: [ 'cembranidoc.it', 'shop-aziendacasere.com', 'shop-barbaran.it', 'shop-pravis.it', 'shop-vintinove.com', 'uccellierashop.it' ]
+ selfsigned_hosts: [ 'cembranidoc.it', 'shop-pravis.it', 'shop-vintinove.com', 'uccellierashop.it', 'shop-erste-neue.it' ]
 
  # list for vhosts with LE certs
- letsencrypt_hosts: [ 'acquistaincantina.it', 'bellinicanellashop.it', 'brugnanoshop.it', 'cantinatrexentashop.it', 'cavenzonashop.it', 'latorderashop.it', 'pasquashop.it', 'shop-cantineborga.it', 'shop-cantinevedova.com', 'shop-frassina.it', 'shop-lorenzonetto.it', 'shop-poderideltodero.it', 'shopenotriatellus.it', 'vignetizanattashop.it', 'viniscaliaolivashop.it', 'shop-vinimolon.it', 'baccichettovinishop.it' ]
+ letsencrypt_hosts: [ 'acquistaincantina.it', 'bellinicanellashop.it', 'brugnanoshop.it', 'cantinatrexentashop.it', 'cavenzonashop.it', 'latorderashop.it', 'pasquashop.it', 'shop-cantineborga.it', 'shop-cantinevedova.com', 'shop-frassina.it', 'shop-lorenzonetto.it', 'shop-poderideltodero.it', 'shopenotriatellus.it', 'vignetizanattashop.it', 'viniscaliaolivashop.it', 'shop-vinimolon.it', 'baccichettovinishop.it', 'shop-aziendacasere.com', 'shop-barbaran.it' ]

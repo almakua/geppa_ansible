@@ -73,10 +73,13 @@
   ersteneue:
     url: stage.shop-erste-neue.it
     code: ersteneue_it
+  cadirajo:
+    url: stage.shop.cadirajo.it
+    code: cadirajo_it
 
 
 # list for vhosts with self signed certs
- selfsigned_hosts: [ 'stage.cembranidoc.it', 'stage.shop-pravis.it', 'stage.shop-vintinove.com', 'stage.uccellierashop.it', 'stage.shop-erste-neue.it' ]
+ selfsigned_hosts: [ 'stage.cembranidoc.it', 'stage.shop-pravis.it', 'stage.shop-vintinove.com', 'stage.uccellierashop.it', 'stage.shop-erste-neue.it', 'stage.shop.cadirajo.it' ]
 
  # list for vhosts with LE certs
  letsencrypt_hosts: [ 'stage.acquistaincantina.it', 'stage.bellinicanellashop.it', 'stage.brugnanoshop.it', 'stage.cantinatrexentashop.it', 'stage.cavenzonashop.it', 'stage.latorderashop.it', 'stage.pasquashop.it', 'stage.shop-cantineborga.it', 'stage.shop-cantinevedova.com', 'stage.shop-frassina.it', 'stage.shop-lorenzonetto.it', 'stage.shop-poderideltodero.it', 'stage.shopenotriatellus.it', 'stage.vignetizanattashop.it', 'stage.viniscaliaolivashop.it', 'stage.shop-barbaran.it', 'stage.shop-vinimolon.it', 'stage.shop-aziendacasere.com', 'stage.baccichettovinishop.it' ]
